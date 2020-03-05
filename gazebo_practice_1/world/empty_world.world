@@ -15,7 +15,10 @@
      In order for the objects to be included, Model Files have to be positioned at the right default file path : "/usr/share/gazebo-9/models" or "/home/000/.gazebo/models".
      
      "/usr/share/gazebo-9/models" is referred as "model://" value in "uri" tag.
-     
+
+     >> file:// = "/usr/share/gazebo-9"
+     >> model:// = "/usr/share/gazebo-9/models"
+
      If it is not positioned properly, Gazebo_ROS will freeze.
 
      Therefore, in order to keep 3rd party Model Files in Gazebo_ROS, those files have to be moved to above file directory path.
