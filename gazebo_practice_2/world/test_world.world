@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+    <world name="default">
+        
+        <!-- Global Light Source provided by Default Gazebo Model Library -->
+        <include>
+            <uri>model://sun</uri>
+        </include>
+
+        <!-- Ground Plane provided by Default Gazebo Model Library -->
+        <include>
+            <uri>model://ground_plane</uri>
+        </include>
+
+        <!-- Quadrotor Model provided by Default Gazebo Model Library -->
+        <include>
+            <uri>model://quadrotor</uri>
+            <static>true</static>
+            <pose>0 0 10 0 0 0</pose>
+        </include>
+
+    </world>
+</sdf>

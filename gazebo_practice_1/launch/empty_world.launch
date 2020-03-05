@@ -1,0 +1,33 @@
+<!--Reference Materials : Gazebo in 5 minutes by Construct : https://www.youtube.com/watch?v=3YhW04wIjEc&list=PLK0b4e05LnzbHiGDGTgE_FIWpOCvndtYx&index=4 -->
+
+<!-- Practice 1 : How to launch your first Gazebo World using ROS -->
+<!--
+    In order to set up Gazebo simulation, we need 3 elements : Launch File / World File / Model File
+    - Launch File : Invoke Gazebo_ROS to start the program and Load world setting defined by World File
+    - World File : Define how the simulation environment is set up and designed
+    - Model File : Define each model used for the simulation
+-->
+
+<!-- Launch File defines which World File will be loaded and how Gazebo simulation environment will be set up -->
+
+<?xml version="1.0" encoding="UTF-8" ?>
+<launch>
+    <!-- Defining the arguments that will be applied for Gazebo simulation settings -->
+    <arg name="debug" default="false"/>     <!-- Decide whether to Turn on / off debug mode -->
+    <arg name="gui" default="true"/>        <!-- Decide whether to Turn on / off GUI of Gazebo_ROS -->
+    <arg name="pause" default="false"/>     <!-- Decide whether to Start up the time at the moment when Gazebo_ROS runs -->
+    <arg name="world" default="$(find gazebo_practice_1)/world/empty_world.world"/>     <!-- Indicate where the world file is stored in the directory -->
+
+    <!-- Launch Gazebo_ROS with following arguments -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">   
+    <!-- First, launch Gazebo_ROS with empty_world.launch. As a result, simlualtion environment will be empty. 
+         However, the contents within the world will be filled with contents defined by World File -->
+    
+        <arg name="world_name" value="$(arg world)"/>   <!-- Decide which World File will be loaded and Define the name of the simulation environment -->
+        <arg name="debug" value="$(arg debug)"/>        <!-- Apply Debug variable -->
+        <arg name="gui" value="$(arg gui)"/>            <!-- Apply GUI variable -->
+        <arg name="paused" value="$(arg pause)"/>       <!-- Apply Pause variable -->
+        <arg name="use_sim_time" value="true"/>         <!-- Decide whether to use simulation time or real time -->
+
+    </include>
+</launch>
