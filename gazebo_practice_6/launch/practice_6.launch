@@ -1,17 +1,15 @@
-<!--Reference Materials : Gazebo in 5 minutes by Construct : https://www.youtube.com/playlist?list=PLK0b4e05LnzbHiGDGTgE_FIWpOCvndtYx -->
-
-<!-- Practice 2 : How to add Gazebo models to a simulation -->
-<!--
-    In order to load custom or 3rd part Gazebo model into simulation environment, 
--->
 <?xml version="1.0" encoding="UTF-8" ?>
 
 <launch>
+
+    <!-- Set up Environment Variable in order to load models from local Gazebo directory -->
+    <env name="GAZEBO_MODEL_PATH" value="$(find gazebo_practice_6)"/>
+
     <!-- Overwriting these args -->
     <arg name="debug" default="false"/>
     <arg name="gui" default="true"/>
     <arg name="pause" default="true"/>
-    <arg name="world" default="$(find gazebo_practice_2)/world/test_world.world"/>
+    <arg name="world" default="$(find gazebo_practice_6)/world/practice_6_world.world"/>
 
     <!-- Include Gazebo_ros Launcher -->
     <include file="$(find gazebo_ros)/launch/empty_world.launch">

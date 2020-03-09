@@ -1,3 +1,13 @@
+<!--
+    In order to create custom model, each model needs config and SDF/URDF.
+    config file describes basic properties (SDF version, path to SDF file, author, version, etc)
+    SDF/URDF file defines kinematic characteristics (size, collision box, geometry, visual properties, etc)
+
+    SDF : Describe robots, models, simulation environment
+
+    URDF : Describe only single robot
+-->
+
 <?xml version="1.0"?>
 <sdf version="1.5">
     <world name="default">
@@ -15,7 +25,12 @@
         <include>
             <uri>model://models/my1stmodel</uri>
             <static>true</static>
-            <pose>0 0 5 0 0</pose>
+            <pose>0 0 5 0 0 0</pose>
+        </include>
+
+        <include>
+            <uri>model://models/quadrotor</uri>
+            <pose>3 2 1 0 0 0</pose>
         </include>
 
     </world>

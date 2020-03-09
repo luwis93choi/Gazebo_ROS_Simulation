@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+    
+    <model name="Practice_5_Model">
+        
+        <static>false</static>
+        
+        <link name="link">
+            
+            <collision name="collision">
+                <geometry>
+                    <mesh>
+                        <uri>model://models/practice_model/meshes/RC_car_test.dae</uri>
+                        <scale>0.01 0.01 0.01</scale>
+                    </mesh>
+                </geometry>
+                <surface>
+                    <friction>
+                        <ode>
+                            <mu>100</mu>
+                            <mu2>50</mu2>
+                        </ode>
+                    </friction>
+                </surface>
+            </collision>
+            
+            <visual name="visual">
+                <geometry>
+                    <mesh>
+                        <uri>model://models/practice_model/meshes/RC_car_test.dae</uri>
+                        <scale>0.01 0.01 0.01</scale>
+                    </mesh>
+                </geometry>
+            </visual>
+        
+        </link>
+    </model>
+
+</sdf>
