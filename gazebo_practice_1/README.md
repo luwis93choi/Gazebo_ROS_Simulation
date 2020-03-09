@@ -27,7 +27,7 @@ Therefore, in order to keep 3rd party Model Files in Gazebo_ROS, those files hav
 **If we want to keep model files under current project directory, we have to change PATH variable of Gazebo by using < env > tag in launch file.**   
 
 <code>
-&lt env name="GAZEBO_MODEL_PATH" value="$(find 'project_name')"/ &gt
+&ltenv name="GAZEBO_MODEL_PATH" value="$(find 'project_name')"/&gt
 </code>   
 <br></br>
 
