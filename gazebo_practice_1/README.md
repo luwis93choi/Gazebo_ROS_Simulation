@@ -24,7 +24,7 @@ In order for the objects to be included, Model Files have to be positioned at th
 
 Therefore, in order to keep 3rd party Model Files in Gazebo_ROS, those files have to be moved to above file directory path.
 
-**If we want to keep model files under current project directory, we have to change PATH variable of Gazebo by using <env> tag in launch file.**   
+**If we want to keep model files under current project directory, we have to change PATH variable of Gazebo by using < env > tag in launch file.**   
 
 <code>
 &lt env name="GAZEBO_MODEL_PATH" value="$(find 'project_name')"/ &gt
