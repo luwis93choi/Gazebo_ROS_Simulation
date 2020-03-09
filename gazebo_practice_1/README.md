@@ -23,7 +23,16 @@ In order for the objects to be included, Model Files have to be positioned at th
 **If it is not positioned properly, Gazebo_ROS will freeze.**
 
 Therefore, in order to keep 3rd party Model Files in Gazebo_ROS, those files have to be moved to above file directory path.
-     
+
+**If we want to keep model files under current project directory, we have to change PATH variable of Gazebo by using <env> tag in launch file.**   
+
+<code>
+&lt env name="GAZEBO_MODEL_PATH" value="$(find 'project_name')"/ &gt
+</code>   
+<br></br>
+
+**This will make Gazebo to look for alternate PATH when loading custom models.**
+
 > (Reference 1 : "How to get the gazebo models after initial install" : https://gist.github.com/awesomebytes/982166e825aa23ecdaf9acf34fa0a330 )
 
 > (Reference 2 : "How do I start Nautilus (Ubuntu File Directory Program) as root?" : https://askubuntu.com/questions/156998/how-do-i-start-nautilus-as-root )
