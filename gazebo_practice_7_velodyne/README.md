@@ -1,4 +1,4 @@
-# Practice 7 : Building Gazebo model for Velodyne LiDAR
+# Practice 7 : Building Gazebo model of Velodyne LiDAR
 
 Find dimension data and sensor data from datasheet.
 
