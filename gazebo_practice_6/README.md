@@ -9,4 +9,13 @@ When writing URDF XML codes, Xacro (XML Macros) is used to simplify overall stru
 
 xacro --inorder option is now default run option. No need to include --inorder option for xacro.
 
+Arguments necessary for spawning a Gazebo model (Coordinates, Poses, etc) can be passed to 'spawn_model' node of 'gazebo_ros' package    
+
+<code>
+&ltnode name="NODE_NAME" pkg="gazebo_ros" type="spawn_model" 
+output="screen"<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args="-urdf -param robot_description -model my_robot -x $(arg x) -y $(arg y) -z $(arg z)"&gt
+</code>
+<br></br>
+
 Rviz is used to debug URDF models' integrity and internal TF structures.

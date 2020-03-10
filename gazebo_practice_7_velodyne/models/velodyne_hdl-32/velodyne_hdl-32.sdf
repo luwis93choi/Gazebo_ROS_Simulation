@@ -1,0 +1,178 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+
+    <model name="velodyne_hdl-32">
+    
+        <link name="base">
+            
+            <pose>0 0 0.029335 0 0 0</pose>
+
+            <inertial>
+                <mass>1.2</mass>
+                <inertia>
+                    <ixx>0.001087473</ixx>
+                    <iyy>0.001087473</iyy>
+                    <izz>0.001092437</izz>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyz>0</iyz>
+                </inertia>
+            </inertial>
+            
+            <collision name="base_collision">
+                <geometry>
+                    <cylinder>
+                        <radius>0.04267</radius>
+                        <length>0.05867</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name="base_visual">
+                <geometry>
+                    <cylinder>
+                        <radius>0.04267</radius>
+                        <length>0.05867</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+
+        </link>
+
+        <link name="top">
+
+            <pose>0 0 0.095455 0 0 0</pose>
+
+            <inertial>
+                <mass>0.1</mass>
+                <inertia>
+                    <ixx>0.000090623</ixx>
+                    <iyy>0.000090623</iyy>
+                    <izz>0.000091036</izz>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyz>0</iyz>
+                </inertia>
+            </inertial>
+
+            <collision name="top_collision">
+                <geometry>
+                    <cylinder>
+                        <radius>0.04267</radius>
+                        <length>0.07357</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name="top_visual">
+                <geometry>
+                    <cylinder>
+                        <radius>0.04267</radius>
+                        <length>0.07357</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+
+            <!-- Assign sensor properties to top link -->
+            <!-- 
+                'ray' sensor type will provide one or more beams that generate distance, and potentially intesity data. 
+                'ray' sensor consists of <scan> and <range> SDF elements.
+                <scan> element defines the layout and number of beams
+                <range> element defines rays that fan out in a vertical plane
+            -->
+            <sensor type="ray" name="sensor">
+            
+                <!-- 
+                    Position the ray sensor based on the specification.
+                    Also, rotate it by 90 degrees around X-axis so that <horizontal> rays become vertical. 
+                -->
+            
+                <pose>0 0 -0.004645 1.5707 0 0</pose>
+
+                <!-- Enable visualization to see the rays in the GUI -->
+                <visualize>true</visualize>
+
+                <!-- Set the update rate of the sensor -->
+                <update_rate>30</update_rate>
+
+                <!-- Assign 'ray' properties that define the characteristics of beams -->
+                <ray>
+                
+                    <!-- 'scan' element contains the horizontal and vertical beams. -->
+                    <scan>
+                        <!-- Horizontal beams -->
+                        <horizontal>
+                            <!-- Velodyne_HDL-32 has 32 beams (samples) -->
+                            <samples>32</samples>
+
+                            <!--
+                                Resolution is multiplied by samples to determine the number of simulated beams vs interpolated beams
+                                Reference : http://sdformat.org/spec?ver=1.6&elem=sensor#horizontal_resolution
+                            -->
+                            <resolution>1</resolution>
+
+                            <!-- Minimum angle in radians -->
+                            <min_angle>-0.53529248</min_angle>
+
+                            <!-- Maximum angle in radians -->
+                            <max_angle>0.18622663</max_angle>
+
+                        </horizontal>
+                    </scan>
+
+                    <!-- 'range' element defines the characteristics of an individual beam -->
+                    <range>
+                    
+                        <!-- Minimum distance of the beam -->
+                        <min>0.05</min>
+
+                        <!-- Maximum distance of the beam -->
+                        <max>70</max>
+
+                        <!-- Linear resolution of the beam -->
+                        <resolution>0.02</resolution>
+
+                    </range>
+
+                </ray>
+
+            </sensor>
+
+        </link>
+
+        <!-- Revolute joint : Single rotational degree of freedom between two links -->
+        <joint type="revolute" name="joint">
+
+            <!-- Position of Joint is defined based on the coordinate of parent of the joint-->
+            <!-- Position the joint at the bottom of the top link -->
+            <pose>0 0 -0.036785 0 0 0</pose>
+
+            <!-- 
+                 Since top link spins relateive to base link, base link will be parent and top link will be child. 
+                 Revolute joint will connect those two links.
+            -->
+            <!-- Use the base link as the parent of the joint -->
+            <parent>base</parent>
+
+            <!-- Use top link as the child of the joint -->
+            <child>top</child>
+
+            <!-- Axis defines the joint's degree of freedom -->
+            <axis>
+            
+                <!-- Revolve aroung the z-axis -->
+                <xyz>0 0 1</xyz>
+
+                <!-- Limit refers to the range of motion of the joint -->     
+                <limit>
+                    <lower>-10000000000000000</lower>
+                    <upper> 10000000000000000</upper>
+                </limit>
+
+            </axis>
+
+        </joint>
+
+    </model>
+
+</sdf>

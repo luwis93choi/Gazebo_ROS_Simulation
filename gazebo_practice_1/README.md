@@ -38,3 +38,14 @@ Therefore, in order to keep 3rd party Model Files in Gazebo_ROS, those files hav
 > (Reference 2 : "How do I start Nautilus (Ubuntu File Directory Program) as root?" : https://askubuntu.com/questions/156998/how-do-i-start-nautilus-as-root )
 
 > (Reference 3 : "OSRF (Open Source Robotics Foundation) Gazebo Model Package" : https://bitbucket.org/osrf/gazebo_models/src/default/ )
+
+# Building Gazebo models and worlds
+
+We can build Gazebo models and worlds through **setup.bash** from devel folder.
+
+<code>
+cd ~/'WORKSPACE NAME'/devel
+
+. setup.bash
+</code>
+<br></br>

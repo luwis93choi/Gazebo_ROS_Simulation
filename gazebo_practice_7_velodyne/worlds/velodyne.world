@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+
+    <world name="default">
+
+        <!-- Global Light source -->
+        <include>
+            <uri>model://models/sun</uri>
+        </include>
+
+        <!-- Ground Plane -->
+        <include>
+            <uri>model://models/ground_plane</uri>
+        </include>
+
+        <!-- Velodyne Lidar -->
+        <include>
+            <uri>model://models/velodyne_hdl-32</uri>
+        </include>
+
+    </world>
+
+</sdf>
