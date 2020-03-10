@@ -13,8 +13,7 @@ Arguments necessary for spawning a Gazebo model (Coordinates, Poses, etc) can be
 
 <code>
 &ltnode name="NODE_NAME" pkg="gazebo_ros" type="spawn_model" 
-output="screen"<br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; args="-urdf -param robot_description -model my_robot -x $(arg x) -y $(arg y) -z $(arg z)"&gt
+output="screen" args="-urdf -param robot_description -model my_robot -x $(arg x) -y $(arg y) -z $(arg z)"&gt
 </code>
 <br></br>
 
