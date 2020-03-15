@@ -3,6 +3,9 @@
 
     <model name="velodyne_hdl-32">
     
+        <!-- Attach the plugin to this model -->
+        <plugin name="velodyne_control" filename="libvelodyne_plugin.so"></plugin>
+
         <link name="base">
             
             <pose>0 0 0.029335 0 0 0</pose>
@@ -29,11 +32,23 @@
             </collision>
 
             <visual name="base_visual">
+                <!-- Adjust pose of visual element of LiDAR base in order to match it to its top -->
+                <pose>0 0 -0.029335 0 0 0</pose>
                 <geometry>
+                    <!-- Use cylinder shape for simple 3D modeling design of Velodyne LiDAR base -->
+                    <!--
                     <cylinder>
                         <radius>0.04267</radius>
                         <length>0.05867</length>
                     </cylinder>
+                    -->
+
+                    <!-- Use mesh for complex 3D modeling design of Velodyne LiDAR base -->
+                    <mesh><!-- Mesh tag indicates that we will use 3D mesh for visualization -->
+                        <uri>model://models/velodyne_hdl-32/meshes/velodyne_base_corrected.dae</uri>
+                        <!-- URI should refer to 3D mesh. 'model://' URI scheme indicates that we are referencing Gazebo model. -->
+                        <!-- Use corrected COLLADA design mesh for correct positioning and scale -->
+                    </mesh>
                 </geometry>
             </visual>
 
@@ -65,11 +80,23 @@
             </collision>
 
             <visual name="top_visual">
+                <!-- Adjust pose of visual element of LiDAR top in order to match it to its base -->
+                <pose>0 0 -0.0376785 0 0 1.5707</pose>
                 <geometry>
+                    <!-- Use cylinder shape for simple 3D modeling design of Velodyne LiDAR base -->
+                    <!--
                     <cylinder>
                         <radius>0.04267</radius>
                         <length>0.07357</length>
                     </cylinder>
+                    -->
+
+                    <!-- Use mesh for complex 3D modeling design of Velodyne LiDAR base -->
+                    <mesh><!-- Mesh tag indicates that we will use 3D mesh for visualization -->
+                        <uri>model://models/velodyne_hdl-32/meshes/velodyne_top_corrected.dae</uri>
+                        <!-- URI should refer to 3D mesh. 'model://' URI scheme indicates that we are referencing Gazebo model. -->
+                        <!-- Use corrected COLLADA design mesh for correct positioning and scale -->
+                    </mesh>
                 </geometry>
             </visual>
 
@@ -133,6 +160,14 @@
                         <resolution>0.02</resolution>
 
                     </range>
+
+                    <!-- Apply gaussian noise model for more realistic 3D modeling by using 'noise' element -->
+                    <noise>
+                        <!-- Gaussian Noise -->
+                        <type>gaussian</type>
+                        <mean>0.0</mean>
+                        <stddev>0.02</stddev>
+                    </noise>
 
                 </ray>
 

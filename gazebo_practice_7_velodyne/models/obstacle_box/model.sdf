@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+
+    <model name="obstacle_box">
+    
+        <static>true</static>
+
+        <link name="obstacle_box_body">
+            <collision name="box_collision">
+                <geometry>
+                    <box>
+                        <size>2 2 2</size>
+                    </box>
+                </geometry>
+            </collision>
+
+            <visual name="obstacle_box_visual">
+                <geometry>
+                    <box>
+                        <size>2 2 2</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+
+    </model>
+
+</sdf>

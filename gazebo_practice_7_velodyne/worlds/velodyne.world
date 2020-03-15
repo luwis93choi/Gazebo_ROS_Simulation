@@ -18,6 +18,11 @@
             <uri>model://models/velodyne_hdl-32</uri>
         </include>
 
+        <include>
+            <uri>model://models/obstacle_box</uri>
+            <pose>5 0 0 0 0 0</pose>
+        </include>
+
     </world>
 
 </sdf>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<launch>
+
+    <param name="obstacle_box_description" command="$(find xacro)/xacro '$(find gazebo_practice_8_velodyne_urdf)/urdf/obstacle_box.urdf'"></param>
+
+    <arg name="obstacle_box_x" default="0"></arg>
+    <arg name="obstacle_box_y" default="0"></arg>
+    <arg name="obstacle_box_z" default="1"></arg>
+
+    <node name="practice_8_spawn" pkg="gazebo_ros" type="spawn_model" output="screen"
+          args="-urdf -param obstacle_box_description -model obstacle_box -x $(arg obstacle_box_x) -y $(arg obstacle_box_y) -z $(arg obstacle_box_z)"></node>
+
+</launch>

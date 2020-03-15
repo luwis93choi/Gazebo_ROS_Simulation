@@ -17,4 +17,7 @@
         <arg name="use_sim_time" value="true"></arg>
     </include>
 
+    <include file="$(find gazebo_practice_7_velodyne)/src/velodyne_plugin.cc">
+    </include>
+
 </launch>
