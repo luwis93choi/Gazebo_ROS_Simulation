@@ -24,6 +24,7 @@ def generate_launch_description():
         output='screen',
     )
 
+    # Model Launch Process Instance
     spawn_agent = Node(
         package='gazebo_ros',
         node_executable='spawn_entity.py',
