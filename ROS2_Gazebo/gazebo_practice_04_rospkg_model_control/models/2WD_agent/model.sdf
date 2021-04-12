@@ -17,11 +17,10 @@
 -->
 
 <sdf version='1.5'>
-    <world name='test'>
     <model name='2WD_agent'>
     
         <!-- Define the model as a moving object -->
-        <static>true</static>
+        <static>false</static>
 
         <!-- Rectangular base of the robot -->
         <link name='chassis'>
@@ -32,6 +31,16 @@
             <!-- Orientation of the center will be: -->
             <!-- Roll = 0 rad | Pitch = 0 rad | Yaw = 0 rad -->
             <pose>0 0 0.04 0 0 0</pose>
+
+            <inertial>
+                <mass>100.0</mass>
+                <pose>0.0 0 0.1 0 0 0</pose>
+                <inertia>
+                    <ixx>0.5</ixx>
+                    <iyy>1.0</iyy>
+                    <izz>0.1</izz>
+                </inertia>
+            </inertial>
 
             <!-- [Base of 2WD Vehicle] -->
             <!-- Define the shape of collision area of base -->
@@ -46,7 +55,6 @@
 
             <!-- Define the visual representation of the base -->
             <visual name='visual'>
-                <pose>0 0 0.02 0 0 0</pose>
                 <geometry>
                     <box>
                         <!-- Define visual shape of the base as box with same collision area -->
@@ -58,10 +66,10 @@
             <!-- [Front Caster Wheel] -->
             <!-- Define the shape of collision area of caster wheel -->
             <collision name='caster_collision'>
-                <pose>-0.19 0 0 0 0 0</pose>
+                <pose>-0.1 0 -0.04 0 0 0</pose>
                 <geometry>
                     <sphere>
-                        <radius>0.06</radius>
+                        <radius>0.03</radius>
                     </sphere>
                 </geometry>
 
@@ -82,10 +90,10 @@
 
             <!-- Define visual shape of the caster wheel -->
             <visual name='caster_visual'>
-                <pose>-0.19 0 0 0 0 0</pose>
+                <pose>-0.1 0 -0.04 0 0 0</pose>
                 <geometry>
                     <sphere>
-                        <radius>0.06</radius>
+                        <radius>0.03</radius>
                     </sphere>
                 </geometry>
             </visual>
@@ -93,12 +101,12 @@
 
         <!-- [Left Wheel] -->
         <link name='left_wheel'>
-            <pose>0.12 0.19 0.1 0 1.5707 1.5707</pose>
+            <pose>0.12 0.19 0.03 0 1.5707 1.5707</pose>
             
             <collision name='collision'>
                 <geometry>
                     <cylinder>
-                        <radius>0.12</radius>
+                        <radius>0.06</radius>
                         <length>0.08</length>
                     </cylinder>
                 </geometry>
@@ -107,21 +115,34 @@
             <visual name='visual'>
                 <geometry>
                     <cylinder>
-                        <radius>0.12</radius>
+                        <radius>0.06</radius>
                         <length>0.08</length>
                     </cylinder>
                 </geometry>
+                <material>
+                    <ambient>0 0 0 1</ambient>
+                </material>
             </visual>
         </link>
 
+        <!-- [Left Wheel Motor/Joint] -->
+        <joint type='revolute' name='left_wheel_hinge'>
+            <pose>0 0 -0.03 0 0 0</pose>
+            <parent>chassis</parent>
+            <child>left_wheel</child>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
         <!-- [Right Wheel] -->
-        <link name='right wheel'>
-            <pose>0.12 -0.19 0.1 0 1.5707 1.5707</pose>
+        <link name='right_wheel'>
+            <pose>0.12 -0.19 0.03 0 1.5707 1.5707</pose>
 
             <collision name='collision'>
                 <geometry>
                     <cylinder>
-                        <radius>0.12</radius>
+                        <radius>0.06</radius>
                         <length>0.08</length>
                     </cylinder>
                 </geometry>
@@ -130,15 +151,164 @@
             <visual name='visual'>
                 <geometry>
                     <cylinder>
-                        <radius>0.12</radius>
+                        <radius>0.06</radius>
                         <length>0.08</length>
                     </cylinder>
                 </geometry>
+                <material>
+                    <ambient>0 0 0 1</ambient>
+                </material>
             </visual>
         </link>
 
-        <!-- [LiDAR Sensor] -->
+        <!-- [Right Wheel Motor/Joint] -->
+        <joint type='revolute' name='right_wheel_hinge'>
+            <pose>0 0 0.03 0 0 0</pose>
+            <parent>chassis</parent>
+            <child>right_wheel</child>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <!-- [LiDAR Sensor | Velodyne HDL 32] -->
+        <link name='lidar_base'>
+
+            <!-- Assign inertial property of LiDAR -->
+            <inertial>
+                <!-- Mass of LiDAR sensor in kg -->
+                <mass>1.2</mass>
+                <inertia>
+                    <ixx>0.001087473</ixx>
+                    <iyy>0.001087473</iyy>
+                    <izz>0.001092437</izz>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyz>0</iyz>
+                </inertia>
+            </inertial>
+
+            <!-- Position is towards the front of the robot -->
+            <!-- LiDAR is mounted on the top -->
+            <pose>0.15 0 0.12 0 0 0</pose>
+
+            <collision name='base_collision'>
+                <geometry>
+                    <cylinder>
+                        <!-- Radius and Length provided by Velodyne -->
+                        <radius>0.04267</radius>
+                        <length>0.05867</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='base_visual'>
+                <geometry>
+                    <cylinder>
+                        <!-- Radius and Length provided by Velodyne -->
+                        <radius>0.04267</radius>
+                        <length>0.05867</length>
+                    </cylinder>
+                </geometry>
+                <material>
+                    <ambient>0 0 1 1</ambient>
+                </material>
+            </visual>
+
+        </link>
+
+        <link name='lidar_top'>
+        
+            <!-- Assign inertial property of LiDAR -->
+            <inertial>
+                <!-- Mass of LiDAR sensor in kg -->
+                <mass>0.1</mass>
+                <inertia>
+                    <ixx>0.000090623</ixx>
+                    <iyy>0.000090623</iyy>
+                    <izz>0.000091036</izz>
+                    <ixy>0</ixy>
+                    <ixz>0</ixz>
+                    <iyz>0</iyz>
+                </inertia>
+            </inertial>
+
+            <!-- Position is towards the front of the robot -->
+            <!-- LiDAR is mounted on the top -->
+            <pose>0.15 0 0.187 0 0 0</pose>
+
+            <collision name='top_collision'>
+                <geometry>
+                    <cylinder>
+                        <!-- Radius and Length provided by Velodyne -->
+                        <radius>0.04267</radius>
+                        <length>0.07357</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='top_visual'>
+                <geometry>
+                    <cylinder>
+                        <!-- Radius and Length provided by Velodyne -->
+                        <radius>0.04267</radius>
+                        <length>0.07357</length>
+                    </cylinder>
+                </geometry>
+                <material>
+                    <ambient>0 1 1 1</ambient>
+                </material>
+            </visual>
+
+        </link>
+
+        <joint type='revolute' name='lidar_joint'>
+            <pose>0 0 -0.035 0 0 0</pose>
+            <parent>lidar_base</parent>
+            <child>lidar_top</child>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+
+        <joint type='fixed' name='lidar_base_joint'>
+            <parent>chassis</parent>
+            <child>lidar_base</child>
+        </joint>
+
+        <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
+            <ros>
+                <namespace>/test</namespace>
+                <argument>cmd_vel:=cmd_vel</argument>
+                <argument>odom:=odom</argument>
+            </ros>
+
+            <!-- Wheels -->
+            <left_joint>left_wheel_hinge</left_joint>
+            <right_joint>right_wheel_hinge</right_joint>
+
+            <!-- Kinematics -->
+            <wheel_separation>0.26</wheel_separation>
+            <wheel_diameter>0.2</wheel_diameter>
+
+            <!-- Limits -->
+            <max_wheel_torque>20</max_wheel_torque>
+            <max_wheel_acceleration>1.0</max_wheel_acceleration>
+
+            <!-- ROS2 Message Output Setting -->
+            <publish_odom>true</publish_odom>
+            <publish_odom_tf>true</publish_odom_tf>
+            <publish_wheel_tf>true</publish_wheel_tf>
+
+            <odometry_frame>odom</odometry_frame>
+            <robot_base_frame>chassis</robot_base_frame>
+        </plugin>
+
+        <plugin name='lidar_control' filename='libgazebo_ros_joint_state_publisher.so'>
+            <joint_name>lidar_joint</joint_name>
+            <joint_name>left_wheel_hinge</joint_name>
+        </plugin>
 
     </model>
-    </world>
 </sdf>
