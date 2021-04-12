@@ -1,0 +1,57 @@
+<?xml verison="1.0" ?>
+<sdf version="1.5">
+  <world name="Practice01">
+    
+    <!-- Global Light Source-->
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+    <!-- Ground Plane -->
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <!-- Include Locally-defined SDF Model -->
+    <model name="my_model">
+      <pose>0 0 0.5 0 0 0</pose>
+      <static>true</static>
+      <link name="link">
+        
+        <!-- Collision Box Property of Link of Model -->
+        <collision name="collision">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </collision>
+
+        <!-- Visual Representation of Link of Model -->
+        <visual name="visual">
+          <geometry>
+            <box>
+              <size>1 1 1</size>
+            </box>
+          </geometry>
+        </visual>
+
+        <!-- Inertia of Link of Model -->
+        <inertial>
+          <mass>1.0</mass>
+          <inertia>   <!-- Inertias are tricky to compute -->
+            <!-- http://gazebosim.org/tutorials?tut=inertia&cat=build_robot -->
+            <ixx>0.083</ixx>       <!-- for a box: ixx = 0.083 * mass * (y*y + z*z) -->
+            <ixy>0.0</ixy>         <!-- for a box: ixy = 0 -->
+            <ixz>0.0</ixz>         <!-- for a box: ixz = 0 -->
+            <iyy>0.083</iyy>       <!-- for a box: iyy = 0.083 * mass * (x*x + z*z) -->
+            <iyz>0.0</iyz>         <!-- for a box: iyz = 0 -->
+            <izz>0.083</izz>       <!-- for a box: izz = 0.083 * mass * (x*x + y*y) -->
+          </inertia>
+        </inertial>
+
+      </link>
+    </model>
+
+  </world>
+</sdf>

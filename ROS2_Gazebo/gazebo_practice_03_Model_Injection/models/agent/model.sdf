@@ -1,0 +1,230 @@
+<!-- Reference : https://medium.com/creating-a-gazebo-simulation-with-ros2-for-your/introduction-8daf6efa12f4 -->
+
+<sdf version='1.5'>
+
+    <!-- Car-like model with wheels -->
+    <model name='agent_gazebo'>
+
+        <!-- Define the model as moving object -->
+        <static>false</static>
+    
+        <link name='chassis'>
+            <pose>0 0 0.1 0 0 0</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <box>
+                        <size>.2 .14 .01</size>
+                    </box>
+                </geometry>
+            </collision>
+            
+            <visual name='visual'>
+                <geometry>
+                    <box>
+                        <size>.2 .14 .01</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name='front_left_wheel'>
+            <pose>0.057 0.07 0.1 0 1.5707 1.5707</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name='front_right_wheel'>
+            <pose>0.057 -0.07 0.1 0 1.5707 1.5707</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name='back_left_wheel'>
+            <pose>-0.057 0.07 0.1 0 1.5707 1.5707</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <link name='back_right_wheel'>
+            <pose>-0.057 -0.07 0.1 0 1.5707 1.5707</pose>
+
+            <collision name='collision'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </collision>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.035</radius>
+                        <length>0.01</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint type='revolute' name='front_left_wheel_hinge'>
+            <pose>0 0 -0.03 0 0 0</pose>
+            <child>front_left_wheel</child>
+            <parent>chassis</parent>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <joint type='revolute' name='front_right_wheel_hinge'>
+            <pose>0 0 0.03 0 0 0</pose>
+            <child>front_right_wheel</child>
+            <parent>chassis</parent>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <joint type='revolute' name='back_left_wheel_hinge'>
+            <pose>0 0 -0.03 0 0 0</pose>
+            <child>back_left_wheel</child>
+            <parent>chassis</parent>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <joint type='revolute' name='back_right_wheel_hinge'>
+            <pose>0 0 0.03 0 0 0</pose>
+            <child>back_left_wheel</child>
+            <parent>chassis</parent>
+            <axis>
+                <xyz>0 0 1</xyz>
+            </axis>
+        </joint>
+
+        <!-- LiDAR Sensor -->
+        <link name='lidar'>
+            <pose>0 0 0.2 0 0 0 0</pose>
+            <sensor name='rplidar' type='ray'>
+                <always_on>true</always_on>
+                <update_rate>30</update_rate>
+                <visualize>1</visualize>
+                <topic>scan</topic>
+                <ray>
+                    <scan>
+                        <horizontal>
+                            <samples>360</samples>
+                            <resolution>1</resolution>
+                            <min_angle>0</min_angle>
+                            <max_angle>6.28</max_angle>
+                        </horizontal>
+                    </scan>
+                    <range>
+                        <min>0.1</min>
+                        <max>12</max>
+                        <resolution>0.2</resolution>
+                    </range>
+                </ray>
+            </sensor>
+
+            <visual name='visual'>
+                <geometry>
+                    <cylinder>
+                        <radius>0.03</radius>
+                        <length>0.03</length>
+                    </cylinder>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint name='lidar_joint' type='fixed'>
+            <parent>chassis</parent>
+            <child>lidar</child>
+        </joint>
+
+        <!-- Camera Sensor -->
+        <link name='camera'>
+            <pose>-0.1 0 0.14 0 0 3.14</pose>
+            <sensor type='camera' name='pi_camera'>
+                <camera>
+                    <horizontal_fov>1.047</horizontal_fov>
+                    <image>
+                        <width>320</width>
+                        <height>240</height>
+                    </image>
+                    <clip>
+                        <near>0.1</near>
+                        <far>100</far>
+                    </clip>
+                </camera>
+                <always_on>1</always_on>
+                <update_rate>5</update_rate>
+                <visualize>true</visualize>
+            </sensor>
+
+            <visual name='visual'>
+                <geometry>
+                    <box>
+                        <size>0.01 0.03 0.025</size>
+                    </box>
+                </geometry>
+            </visual>
+        </link>
+
+        <joint name='camera_joint' type='fixed'>
+            <parent>chassis</parent>
+            <child>camera</child>
+        </joint>
+        
+    </model>
+</sdf>
