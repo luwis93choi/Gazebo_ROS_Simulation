@@ -25,7 +25,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'main = gazebo_practice_04_rospkg_model_control.main:main'
+            'main = gazebo_practice_04_rospkg_model_control.main:main',
+            'drive_control_node = gazebo_practice_04_rospkg_model_control.drive_control_node:main'
         ],
     },
 )
