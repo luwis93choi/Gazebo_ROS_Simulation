@@ -6,6 +6,8 @@ from launch_ros.actions import Node
 
 import os
 
+import random
+
 package_name = 'gazebo_practice_04_rospkg_model_control'
 
 WS_current_dir = os.getcwd()
@@ -23,10 +25,19 @@ def generate_launch_description():
         output='screen'
     )
 
+    # x, y pose for random model spawn
+    random_spawn_x = random.uniform(-3, 3)  
+    random_spawn_y = random.uniform(-3, 3)
+
     spawn_2WD_agent = Node(
         package='gazebo_ros',
         node_executable='spawn_entity.py',
-        arguments=['-entity', 'agent_gazebo', '-file',
+        # spawn_entity.py arguments (https://github.com/ros-simulation/gazebo_ros_pkgs/wiki/ROS-2-Migration:-Spawn-and-delete#spawn-entity-node)
+        arguments=['-entity', 'agent_gazebo', 
+                   '-x {}'.format(random_spawn_x),  # Random spawn x pose
+                   '-y {}'.format(random_spawn_y),  # Random spawn y pose
+                   '-z 0', 
+                   '-file',
                    Package_dir + '/models/2WD_agent/model.sdf'],
         output='screen'
     )
