@@ -4,8 +4,8 @@
     Gazebo ROS differential drive plugin
 
     Send topics commands:
-        ros2 topic pub /demo/cmd_vel geometry/Twist '{linear: {x: 0.05}}' -1
-        ros2 topic pub /demo/cmd_vel goemetry/Twist '{angular: {z: 0.01}}' -1
+        ros2 topic pub /demo/cmd_vel geometry_msgs/msg/Twist '{linear: {x: 0.05}}' -1
+        ros2 topic pub /demo/cmd_vel goemetry_msgs/msg/Twist '{angular: {z: 0.01}}' -1
 
     Listen topics commands:
         ros2 topic echo /demo/odom
@@ -47,7 +47,7 @@
             <collision name='collision'>
                 <geometry>
                     <box>
-                        <!-- Box-shaped collision area with 0.4m in lenght, 0.2m in width, and 0.1m in height -->
+                        <!-- Box-shaped collision area with 0.4m in length, 0.2m in width, and 0.1m in height -->
                         <size>0.4 0.2 0.1</size>
                     </box>
                 </geometry>
@@ -269,6 +269,14 @@
             <axis>
                 <xyz>0 0 1</xyz>
             </axis>
+            <!--
+            <physics>
+                <ode>
+                    <max_force>1</max_force>
+                    <velocity>100</velocity>
+                </ode>
+            </physics>
+            -->
         </joint>
 
 
@@ -279,35 +287,35 @@
 
         <plugin name='diff_drive' filename='libgazebo_ros_diff_drive.so'>
             <ros>
-                <namespace>/test</namespace>
-                <argument>cmd_vel:=cmd_vel</argument>
-                <argument>odom:=odom</argument>
+                <namespace>/test</namespace>                <!-- Namespace for current model's diff drive plugin topics -->
+                <argument>cmd_vel:=cmd_vel</argument>       <!-- Name mapping for Linear & Angular Velocity Control Topics [geometry_msgs/msg/Twist] -->
+                <argument>odom:=odom</argument>             <!-- Name mapping for Odometry Topics [nav_msgs/msg/Odometry] -->
             </ros>
 
             <!-- Wheels -->
-            <left_joint>left_wheel_hinge</left_joint>
-            <right_joint>right_wheel_hinge</right_joint>
+            <left_joint>left_wheel_hinge</left_joint>       <!-- Name of joint / motor for left wheel -->
+            <right_joint>right_wheel_hinge</right_joint>    <!-- Name of joint / motor for right wheel -->
 
             <!-- Kinematics -->
-            <wheel_separation>0.26</wheel_separation>
-            <wheel_diameter>0.2</wheel_diameter>
+            <wheel_separation>0.26</wheel_separation>   <!-- Distance between the center of one wheel to the other [m] -->
+            <wheel_diameter>0.2</wheel_diameter>        <!-- Diameter of wheels -->
 
             <!-- Limits -->
-            <max_wheel_torque>20</max_wheel_torque>
-            <max_wheel_acceleration>1.0</max_wheel_acceleration>
+            <max_wheel_torque>20</max_wheel_torque>                 <!-- Max torque to be produced by wheel revolution [Nm] -->
+            <max_wheel_acceleration>1.0</max_wheel_acceleration>    <!-- Max wheel acceleration for revolution [rad/s^2] -->
 
             <!-- ROS2 Message Output Setting -->
-            <publish_odom>true</publish_odom>
-            <publish_odom_tf>true</publish_odom_tf>
-            <publish_wheel_tf>true</publish_wheel_tf>
+            <publish_odom>true</publish_odom>               <!-- Decide whether to publish odometry topic -->
+            <publish_odom_tf>true</publish_odom_tf>         <!-- Decide whether to publish odometry tf -->
+            <publish_wheel_tf>true</publish_wheel_tf>       <!-- Decide whether to publish wheel tf -->
 
-            <odometry_frame>odom</odometry_frame>
-            <robot_base_frame>chassis</robot_base_frame>
+            <!-- Frame -->
+            <odometry_frame>odom</odometry_frame>               <!-- Odometry frame name -->
+            <robot_base_frame>chassis</robot_base_frame>        <!-- Model base link frame name -->
         </plugin>
 
         <plugin name='lidar_control' filename='libgazebo_ros_joint_state_publisher.so'>
             <joint_name>lidar_joint</joint_name>
-            <joint_name>left_wheel_hinge</joint_name>
         </plugin>
 
     </model>
